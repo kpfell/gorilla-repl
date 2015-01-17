@@ -2,7 +2,7 @@
 ;;;;
 ;;;; gorilla-repl is licenced to you under the MIT licence. See the file LICENCE.txt for full details.
 
-(defproject gorilla-repl "0.3.5-SNAPSHOT"
+(defproject gorilla-repl "0.4.0-SNAPSHOT"
   :description "A rich REPL for Clojure in the notebook style."
   :url "https://github.com/JonyEpsilon/gorilla-repl"
   :license {:name "MIT"}
@@ -13,7 +13,9 @@
                            [compojure "1.1.8"]
                            [org.slf4j/slf4j-api "1.7.7"]
                            [ch.qos.logback/logback-classic "1.1.2"]
+                           [leiningen-core "2.5.1"]
                            [gorilla-renderable "2.0.0"]
+                           [gorilla-plot "0.1.3"]
                            [javax.servlet/servlet-api "2.5"]
                            [grimradical/clj-semver "0.2.0" :exclusions [org.clojure/clojure]]
                            [cider/cider-nrepl "0.8.1"]
@@ -21,4 +23,5 @@
                            [clojure-complete "0.2.3"]]
   :main ^:skip-aot gorilla-repl.core
   :target-path "target/%s"
-  :profiles {:uberjar {:aot :all}})
+  :profiles {:uberjar {:aot :all}}
+  :plugins [[lein-gorilla "0.3.4"]])

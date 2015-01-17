@@ -1,9 +1,10 @@
-(ns gorilla-repl.nrepl
+(ns gorilla-repl.nrepl-servers
   (:require [gorilla-repl.websocket-relay :as ws-relay]
             [clojure.tools.nrepl.server :as nrepl-server]
             [gorilla-repl.render-values-mw :as render-mw] ;; it's essential this import comes after the previous one! It
                                                           ;; refers directly to a var in nrepl (as a hack to workaround
                                                           ;; a weakness in nREPL's middleware resolution).
+            [leiningen.core.project :as project]
             [cider.nrepl :as cider]
             [clojure.java.io :as io]))
 
