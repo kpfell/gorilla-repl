@@ -93,6 +93,7 @@ var freeSegment = function (contents) {
     // Segment UI state
     self.active = ko.observable(false);
     self.markupVisible = ko.observable(false);
+    self.locked = ko.observable(false);
 
     // The markup
     // handle null contents
@@ -121,19 +122,38 @@ var freeSegment = function (contents) {
     // activate the segment. fromTop will be true is the user's focus is coming from above (and so the cursor should
     // be placed at the top), false indicates the focus is coming from below.
     self.activate = function (fromTop) {
-        self.markupVisible(true);
-        self.content.reflow();
-        self.active(true);
-        if (fromTop) self.content.positionCursorAtContentStart();
-        else self.content.positionCursorAtContentEnd();
+        if (!self.locked()) {
+            self.markupVisible(true);
+            self.content.reflow();
+            self.active(true);
+            if (fromTop) self.content.positionCursorAtContentStart();
+            else self.content.positionCursorAtContentEnd();
+        } else {
+            self.active(true);
+        }
     };
 
     self.deactivate = function () {
         self.content.blur();
         self.markupVisible(false);
         self.active(false);
-
     };
+
+    // lock and unlock - these control whether the segment content can be edited
+
+    // lock the segment. prevents changes.
+    self.lock = function () {
+        self.locked(true);
+        self.content.blur();
+        self.markupVisible(false);
+    }
+
+    self.unlock = function () {
+        self.locked(false);
+        self.markupVisible(true);
+        self.content.reflow();
+        self.content.positionCursorAtContentStart();
+    }
 
     // serialises the segment for saving. The result is valid clojure code, marked up with some magic comments.
     self.toClojure = function () {
