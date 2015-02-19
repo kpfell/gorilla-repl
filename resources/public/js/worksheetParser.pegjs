@@ -19,7 +19,11 @@ segment = freeSegment / codeSegment
 freeSegment = freeSegmentOpenTag content:stringNoDelim? freeSegmentCloseTag
                 {return freeSegment(unmakeClojureComment(content));}
 
-freeSegmentOpenTag = ";; **" lineEnd
+lockedTag = "locked"
+
+space = " "
+
+freeSegmentOpenTag = ";; **" space? lockedTag? space? lineEnd
 
 freeSegmentCloseTag = lineEnd ";; **" lineEnd
 
