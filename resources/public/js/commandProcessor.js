@@ -97,6 +97,42 @@ commandList = [
         }
     },
     {
+        name: "command:worksheet:lock",
+        desc: "Lock the highlighted markdown segment to prevent changes.",
+        showInMenu: true,
+        kb: combo('g', 'k'),
+        action: function () {
+            eventBus.trigger("worksheet:lock");
+        }
+    },
+    {
+        name: "command:worksheet:lock-all",
+        desc: "Lock all markdown segments.",
+        showInMenu: true,
+        kb: combo('g', 'K'),
+        action: function () {
+            eventBus.trigger("worksheet:lock-all");
+        }
+    },
+    {
+        name: "command:worksheet:unlock",
+        desc: "Unlock the highlighted markdown segment to allow changes.",
+        showInMenu: true,
+        kb: combo('g', 'u'),
+        action: function () {
+            eventBus.trigger("worksheet:unlock");
+        }
+    },
+    {
+        name: "command:worksheet:unlock-all",
+        desc: "Unlock all markdown segments.",
+        showInMenu: true,
+        kb: combo('g', 'U'),
+        action: function () {
+            eventBus.trigger("worksheet:unlock-all");
+        }
+    },
+    {
         name: "command:worksheet:delete",
         desc: "Delete the highlighted segment.",
         showInMenu: true,
