@@ -51,6 +51,14 @@ var worksheet = function () {
         self.activeSegmentIndex = index;
     };
 
+    self.lockSegment = function (index) {
+        self.segments()[index].lock();
+    }
+
+    self.unlockSegment = function (index) {
+        self.segments()[index].unlock();
+    }
+
     self.deactivateSegment = function (index) {
         self.segments()[index].deactivate();
         self.activeSegmentIndex = null;
@@ -214,6 +222,32 @@ var worksheet = function () {
                 repl.beginEvaluation({code: code, segmentID: seg.id});
             }
         };
+
+        // The locking command will fire this event. The worksheet will then send a message to the locker
+        // to do the locking itself.
+        addEventHandler("worksheet:lock", function () {
+            // check that a segment is active
+            var seg = self.getActiveSegment();
+            if (seg == null) return;
+            lockSegment(seg);
+        });
+
+        addEventHandler("worksheet:lock-all", function () {
+            self.segments().forEach(lockSegment);
+        });
+
+        // The unlocking command will fire this event. The worksheet will then send a message to the locker
+        // to do the locking itself.
+        addEventHandler("worksheet:unlock", function () {
+            // check that a segment is active
+            var seg = self.getActiveSegment();
+            if (seg == null) return;
+            unlockSegment(seg);
+        });
+
+        addEventHandler("worksheet:unlock-all", function () {
+            self.segments().forEach(unlockSegment);
+        });
 
         // The evaluation command will fire this event. The worksheet will then send a message to the evaluator
         // to do the evaluation itself.
